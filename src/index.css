@@ -41,8 +41,8 @@ img.thumbnail {
   right: 0;
 }
 .btn-primary,
-.btn-outline-primary {
-  background-color: #f0c040;
+.btn-outline-secondary {
+  background: linear-gradient(90deg, #9D44C0 -9.12%, #EC53B0 100%);
   color: #000000;
 }
 
@@ -54,11 +54,13 @@ img.thumbnail {
 }
 
 a.header-link,
+.header-link,
 .header-link > a {
-  border: 1px rgb(33, 37, 41) solid;
-  border-radius: 2px;
+  border: 1.25px #6043c0 solid;
+  border-radius: 6px;
   color: white !important;
   font-weight: bold;
+  align-items: center;
 }
 
 a.header-link:hover,
@@ -76,15 +78,14 @@ a.header-link:hover,
   border: 1px rgb(33, 37, 41) solid;
 }
 .sub-header {
-  background-color: #232f3e;
 }
 
 .cart-badge {
   position: absolute;
   color: #f08000;
   font-weight: bold;
-  margin-left: 16px;
-  margin-top: -3px;
+  margin-left: 10px;
+  margin-top: -4px;
 }
 
 /* Sidebar */
