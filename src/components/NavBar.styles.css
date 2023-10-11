@@ -1,0 +1,11 @@
+.bg-primary-gradient {
+  background: linear-gradient(90deg, #0e21a0 22.79%, #4d2db7 56.6%);
+}
+
+.bg-purple-white-50 {
+  background: rgba(157, 68, 192, 0.5);
+}
+
+.bg-purple-white-70 {
+  background: rgba(157, 68, 192, 0.7);
+}

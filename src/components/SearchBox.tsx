@@ -17,12 +17,12 @@ export default function SearchBox() {
           type="text"
           name="q"
           id="q"
-          placeholder="Search Amazona"
-          aria-label="Search Amazona"
+          placeholder="Search for some rentable items..."
+          aria-label="Search for some rentable items..."
           aria-describedby="button-search"
           onChange={(e) => setQuery(e.target.value)}
         ></FormControl>
-        <Button variant="outline-primary" type="submit" id="button-search">
+        <Button variant="outline-secondary" type="submit" id="button-search">
           <i className="fas fa-search"></i>
         </Button>
       </InputGroup>
