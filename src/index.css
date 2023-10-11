@@ -42,7 +42,7 @@ img.thumbnail {
 }
 .btn-primary,
 .btn-outline-secondary {
-  background: linear-gradient(90deg, #9D44C0 -9.12%, #EC53B0 100%);
+  background: linear-gradient(90deg, #9d44c0 -9.12%, #ec53b0 100%);
   color: #000000;
 }
 
@@ -78,6 +78,7 @@ a.header-link:hover,
   border: 1px rgb(33, 37, 41) solid;
 }
 .sub-header {
+  margin-left: 0.75rem;
 }
 
 .cart-badge {
