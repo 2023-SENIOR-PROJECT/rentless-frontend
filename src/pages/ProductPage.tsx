@@ -24,6 +24,9 @@ export default function ProductPage() {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
+  /**
+   * @TODO Remove mock data when API is ready
+   */
   const isLoading = false;
   const error = false;
   const product = generateMockData()[0];
