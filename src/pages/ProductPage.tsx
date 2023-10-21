@@ -95,7 +95,7 @@ export default function ProductPage() {
                   numReviews={product.numReviews}
                 ></Rating>
               </ListGroup.Item>
-              <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
+              <ListGroup.Item>Price : ฿{product.price}</ListGroup.Item>
               <ListGroup.Item>
                 Description:
                 <p>{product.description}</p>
