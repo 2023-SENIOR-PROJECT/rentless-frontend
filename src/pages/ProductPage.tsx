@@ -1,16 +1,27 @@
-import { useContext } from "react";
-import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
+import { useContext, useState } from "react";
+import {
+  Badge,
+  Button,
+  Card,
+  Carousel,
+  Col,
+  Container,
+  ListGroup,
+  Row,
+  Image,
+} from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
-import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import { Store } from "../Store";
 import { ApiError } from "../types/ApiError";
 import { convertProductToCartItem, getError } from "../utils";
-import { generateMockData } from "../types/Product";
+import { generateMockProducts, generateMockReviews } from "../utils/Mock";
+import Review from "../components/Review.index";
+import "./ProductPage.styles.css";
 
 export default function ProductPage() {
   const params = useParams();
@@ -29,7 +40,13 @@ export default function ProductPage() {
    */
   const isLoading = false;
   const error = false;
-  const product = generateMockData()[0];
+  const product = generateMockProducts()[0];
+  const reviews = generateMockReviews(5);
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex: number) => {
+    setIndex(selectedIndex);
+  };
 
   const navigate = useNavigate();
 
@@ -54,68 +71,83 @@ export default function ProductPage() {
   ) : !product ? (
     <MessageBox variant="danger">Product Not Found</MessageBox>
   ) : (
-    <div>
+    <Container>
       <Row>
-        <Col md={6}>
-          <img className="large" src={product.image} alt={product.name}></img>
+        <Col lg={6}>
+          <Image src={product.image} alt={product.name} thumbnail fluid />
         </Col>
-        <Col md={3}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <Helmet>
-                <title>{product.name}</title>
-              </Helmet>
-              <h1>{product.name}</h1>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Rating
-                rating={product.rating}
-                numReviews={product.numReviews}
-              ></Rating>
-            </ListGroup.Item>
-            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
-            <ListGroup.Item>
-              Description:
-              <p>{product.description}</p>
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col md={3}>
-          <Card>
-            <Card.Body>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Price:</Col>
-                    <Col>${product.price}</Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Status:</Col>
-                    <Col>
-                      {product.countInStock > 0 ? (
-                        <Badge bg="success">In Stock</Badge>
-                      ) : (
-                        <Badge bg="danger">Unavailable</Badge>
-                      )}
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-                {product.countInStock > 0 && (
+        <Col
+          lg={6}
+          className="justify-content-between d-flex flex-column"
+          style={{ minHeight: "90%" }}
+        >
+          <Row>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <Helmet>
+                  <title>{product.name}</title>
+                </Helmet>
+                <h1>{product.name}</h1>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Rating
+                  rating={product.rating}
+                  numReviews={product.numReviews}
+                ></Rating>
+              </ListGroup.Item>
+              <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
+              <ListGroup.Item>
+                Description:
+                <p>{product.description}</p>
+              </ListGroup.Item>
+            </ListGroup>
+          </Row>
+          <Row>
+            <Card>
+              <Card.Body>
+                <ListGroup variant="flush">
                   <ListGroup.Item>
-                    <div className="d-grid">
-                      <Button onClick={addToCartHandler} variant="primary">
-                        Add to Cart
-                      </Button>
-                    </div>
+                    <Row>
+                      <Col>Price:</Col>
+                      <Col>${product.price}</Col>
+                    </Row>
                   </ListGroup.Item>
-                )}
-              </ListGroup>
-            </Card.Body>
-          </Card>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        {product.countInStock > 0 ? (
+                          <Badge bg="success">In Stock</Badge>
+                        ) : (
+                          <Badge bg="danger">Unavailable</Badge>
+                        )}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <div className="d-grid">
+                        <Button onClick={addToCartHandler} variant="primary">
+                          Add to Cart
+                        </Button>
+                      </div>
+                    </ListGroup.Item>
+                  )}
+                </ListGroup>
+              </Card.Body>
+            </Card>
+          </Row>
         </Col>
       </Row>
-    </div>
+      <Container className="d-flex justify-content-center m-5">
+        <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
+          {reviews.map((review) => (
+            <Carousel.Item key={review.id}>
+              <Review data={review} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </Container>
+    </Container>
   );
 }

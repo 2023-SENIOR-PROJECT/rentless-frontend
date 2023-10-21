@@ -6,7 +6,7 @@ import ProductItem from "../components/ProductItem";
 import { useGetProductsQuery } from "../hooks/productHooks";
 import { ApiError } from "../types/ApiError";
 import { getError } from "../utils";
-import { generateMockData } from "../types/Product";
+import { generateMockProducts } from "../utils/Mock";
 
 export default function HomePage() {
   // var { data: products, isLoading, error } = useGetProductsQuery();
@@ -16,7 +16,7 @@ export default function HomePage() {
    */
   const isLoading = false;
   const error = false;
-  const products = generateMockData();
+  const products = generateMockProducts();
 
   return isLoading ? (
     <LoadingBox />
