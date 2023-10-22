@@ -15,7 +15,7 @@ function ProductItem({ product }: { product: Product }) {
   } = state
 
   const addToCartHandler = (item: CartItem) => {
-    const existItem = cartItems.find((x) => x._id === product._id)
+    const existItem = cartItems.find((x) => x._id === product.id)
     const quantity = existItem ? existItem.quantity + 1 : 1
     if (product.countInStock < quantity) {
       alert('Sorry. Product is out of stock')
@@ -30,11 +30,11 @@ function ProductItem({ product }: { product: Product }) {
 
   return (
     <Card className='m-2'>
-      <Link to={`/product/${product.slug}`}>
+      <Link to={`/product/${product.id}`}>
         <img src={product.image} className="card-img-top" alt={product.name} />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product.slug}`}>
+        <Link to={`/product/${product.id}`}>
           <Card.Title>{product.name}</Card.Title>
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />

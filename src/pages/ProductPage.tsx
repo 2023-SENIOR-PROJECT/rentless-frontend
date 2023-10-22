@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Badge,
   Button,
@@ -13,36 +13,36 @@ import {
 import { Helmet } from "react-helmet-async";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import Rating from "../components/Rating";
+import Review from "../components/Review.index";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import Rating from "../components/Rating";
+
 import { Store } from "../Store";
 import { ApiError } from "../types/ApiError";
+
 import { convertProductToCartItem, getError } from "../utils";
 import { generateMockProducts, generateMockReviews } from "../utils/Mock";
-import Review from "../components/Review.index";
+import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
+
 import "./ProductPage.styles.css";
 
-export default function ProductPage() {
+const ProductPage = () => {
   const params = useParams();
-  // const { slug } = params;
-  // const {
-  //   // data: ,
-  //   isLoading,
-  //   error,
-  // } = useGetProductDetailsBySlugQuery(slug!);
+  const { id } = params;
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  /**
-   * @TODO Remove mock data when API is ready
-   */
-  const isLoading = false;
-  const error = false;
-  const product = generateMockProducts()[0];
   const reviews = generateMockReviews(5);
   const [index, setIndex] = useState(0);
+
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useGetProductDetailsBySlugQuery(id!);
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
@@ -51,7 +51,7 @@ export default function ProductPage() {
   const navigate = useNavigate();
 
   const addToCartHandler = () => {
-    const existItem = cart.cartItems.find((x) => x._id === product!._id);
+    const existItem = cart.cartItems.find((x) => x._id === product!.id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (product!.countInStock < quantity) {
       toast.warn("Sorry. Product is out of stock");
@@ -74,7 +74,7 @@ export default function ProductPage() {
     <Container>
       <Row>
         <Col lg={6}>
-          <Image src={product.image} alt={product.name} thumbnail fluid />
+          <Image className="h-100" src={product.image} alt={product.name} thumbnail fluid />
         </Col>
         <Col
           lg={6}
@@ -139,7 +139,7 @@ export default function ProductPage() {
           </Row>
         </Col>
       </Row>
-      <Container className="d-flex justify-content-center m-5">
+      <Container className="d-flex justify-content-center my-5">
         <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
           {reviews.map((review) => (
             <Carousel.Item key={review.id}>
@@ -150,4 +150,6 @@ export default function ProductPage() {
       </Container>
     </Container>
   );
-}
+};
+
+export default ProductPage;

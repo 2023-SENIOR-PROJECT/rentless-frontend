@@ -1,23 +1,28 @@
-import { useQuery } from '@tanstack/react-query'
-import apiClient from '../apiClient'
-import { Product } from '../types/Product'
+import { useQuery } from "@tanstack/react-query";
+import apiClient from "../apiClient";
+import { Product } from "../types/Product";
 
 export const useGetProductsQuery = () =>
   useQuery({
-    queryKey: ['products'],
-    queryFn: async () => (await apiClient.get<Product[]>(`api/products`)).data,
-  })
+    queryKey: ["products"],
+    queryFn: async () => {
+      const { data } = await apiClient.get<{ products: Product[] }>(
+        `api/products`
+      );
+      return data.products;
+    },
+  });
 
-export const useGetProductDetailsBySlugQuery = (slug: string) =>
+export const useGetProductDetailsBySlugQuery = (id: string) =>
   useQuery({
-    queryKey: ['products', slug],
+    queryKey: ["products", id],
     queryFn: async () =>
-      (await apiClient.get<Product>(`api/products/slug/${slug}`)).data,
-  })
+      (await apiClient.get<Product>(`api/products/${id}`)).data,
+  });
 
 export const useGetCategoriesQuery = () =>
   useQuery({
-    queryKey: ['categories'],
+    queryKey: ["categories"],
     queryFn: async () =>
       (await apiClient.get<[]>(`/api/products/categories`)).data,
-  })
+  });

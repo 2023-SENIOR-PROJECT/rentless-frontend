@@ -9,14 +9,7 @@ import { getError } from "../utils";
 import { generateMockProducts } from "../utils/Mock";
 
 export default function HomePage() {
-  // var { data: products, isLoading, error } = useGetProductsQuery();
-
-  /**
-   * @TODO Remove mock data when API is ready
-   */
-  const isLoading = false;
-  const error = false;
-  const products = generateMockProducts();
+  var { data: products, isLoading, error } = useGetProductsQuery();
 
   return isLoading ? (
     <LoadingBox />
@@ -28,7 +21,7 @@ export default function HomePage() {
         <title>TS Rentless</title>
       </Helmet>
       {products!.map((product) => (
-        <Col key={product.slug} sm={6} md={4} lg={3}>
+        <Col key={product.id} sm={6} md={4} lg={3}>
           <ProductItem product={product} />
         </Col>
       ))}

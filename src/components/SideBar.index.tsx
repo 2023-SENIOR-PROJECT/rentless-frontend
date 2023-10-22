@@ -26,7 +26,10 @@ const SideBar: React.FC<SideBarProps> = ({
     document.body.setAttribute("data-bs-theme", mode);
   }, [mode]);
 
-  const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  // const { data: categories, isLoading, error } = useGetCategoriesQuery();
+  const isLoading = false;
+  const error = false;
+  const categories = ["Category 1", "Category 2", "Category 3"];
 
   return (
     <div
