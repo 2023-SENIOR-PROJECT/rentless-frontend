@@ -7,12 +7,13 @@ export function generateMockProducts(length: number = 50): Product[] {
 
   for (let i = 0; i < length; i++) {
     const product: Product = {
-      _id: faker.string.uuid(),
+      id: faker.string.uuid(),
       name: faker.commerce.product(),
       slug: faker.number.int(100).toString(),
       image: faker.image.url(),
       category: faker.commerce.department(),
       brand: faker.company.name(),
+      owner: faker.person.firstName(),
       price: parseFloat(faker.commerce.price({ min: 100, max: 700, dec: 0 })),
       countInStock: faker.number.int({ min: 0, max: 100 }),
       description: faker.commerce.productDescription(),
