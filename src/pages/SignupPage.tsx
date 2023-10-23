@@ -1,54 +1,56 @@
-import { useContext, useEffect, useState } from 'react'
-import { Button, Container, Form } from 'react-bootstrap'
-import { Helmet } from 'react-helmet-async'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { useSignupMutation } from '../hooks/userHooks'
-import { Store } from '../Store'
-import { ApiError } from '../types/ApiError'
-import { getError } from '../utils'
+import { useContext, useEffect, useState } from "react";
+import { Button, Container, Form } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useSigninMutation, useSignupMutation } from "../hooks/userHooks";
+import { Store } from "../Store";
+import { ApiError, SuccessResponse } from "../types/ApiError";
+import { getError } from "../utils";
+import { UserInfo } from "../types/UserInfo";
 
 export default function SignupPage() {
-  const navigate = useNavigate()
-  const { search } = useLocation()
-  const redirectInUrl = new URLSearchParams(search).get('redirect')
-  const redirect = redirectInUrl ? redirectInUrl : '/'
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  const redirectInUrl = new URLSearchParams(search).get("redirect");
+  const redirect = redirectInUrl ? redirectInUrl : "/";
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { state, dispatch } = useContext(Store)
-  const { userInfo } = state
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
 
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect)
+      navigate(redirect);
     }
-  }, [navigate, redirect, userInfo])
+  }, [navigate, redirect, userInfo]);
 
-  const { mutateAsync: signup, isLoading } = useSignupMutation()
+  const { mutateAsync: signup, isLoading } = useSignupMutation();
+  const { mutateAsync: signin } = useSigninMutation();
 
   const submitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
-      return
-    }
+    e.preventDefault();
     try {
-      const data = await signup({
-        name,
+      const response = await signup({
+        firstname,
+        lastname,
         email,
-        password,
-      })
-      dispatch({ type: 'USER_SIGNIN', payload: data })
-      localStorage.setItem('userInfo', JSON.stringify(data))
-      navigate(redirect)
+        password1: password,
+        password2: confirmPassword,
+      });
+      const { data } = response as SuccessResponse<UserInfo>;
+      dispatch({ type: "USER_SIGNIN", payload: data });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      navigate(redirect);
     } catch (err) {
-      toast.error(getError(err as ApiError))
+      toast.error(getError(err as ApiError));
     }
-  }
+  };
 
   return (
     <Container className="small-container">
@@ -57,9 +59,19 @@ export default function SignupPage() {
       </Helmet>
       <h1 className="my-3">Sign Up</h1>
       <Form onSubmit={submitHandler}>
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control onChange={(e) => setName(e.target.value)} required />
+        <Form.Group className="mb-3" controlId="firstname">
+          <Form.Label>First Name</Form.Label>
+          <Form.Control
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="lastname">
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="email">
@@ -94,10 +106,10 @@ export default function SignupPage() {
         </div>
 
         <div className="mb-3">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to={`/signin?redirect=${redirect}`}>Sign In</Link>
         </div>
       </Form>
     </Container>
-  )
+  );
 }

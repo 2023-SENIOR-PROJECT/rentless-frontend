@@ -1,8 +1,15 @@
 export declare type ApiError = {
-  message: string
+  message: string;
   response: {
     data: {
-      message: string
-    }
-  }
+      message: string;
+    };
+  };
+};
+
+export interface SuccessResponse<T> {
+  data: T;
+  message: string;
 }
+
+export type TResponse<T> = SuccessResponse<T> | ApiError;

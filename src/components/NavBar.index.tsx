@@ -61,7 +61,7 @@ const NavBar: React.FC<NavBarProps> = ({ setSidebarIsOpen, sidebarIsOpen }) => {
               {userInfo ? (
                 <NavDropdown
                   className="header-link"
-                  title={`Hello, ${userInfo.name}`}
+                  title={`Hello, ${userInfo.firstname}`}
                 >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>User Profile</NavDropdown.Item>
