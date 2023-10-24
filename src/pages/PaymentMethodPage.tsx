@@ -17,7 +17,7 @@ export default function PaymentMethodPage() {
   )
   useEffect(() => {
     if (!shippingAddress.address) {
-      navigate('/shipping')
+      navigate('/placeorder')
     }
   }, [shippingAddress, navigate])
 

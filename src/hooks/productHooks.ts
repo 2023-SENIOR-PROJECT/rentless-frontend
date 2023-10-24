@@ -7,9 +7,9 @@ export const useGetProductsQuery = () =>
     queryKey: ["products"],
     queryFn: async () => {
       const { data } = await apiClient.get<{ products: Product[] }>(
-        `api/products`
+        `http://localhost:8081/api/products`
       );
-      return data.products;
+      return data;
     },
   });
 
@@ -17,12 +17,14 @@ export const useGetProductDetailsBySlugQuery = (id: string) =>
   useQuery({
     queryKey: ["products", id],
     queryFn: async () =>
-      (await apiClient.get<Product>(`api/products/${id}`)).data,
+      (await apiClient.get<Product>(`http://localhost:8081/api/products/${id}`))
+        .data,
   });
 
 export const useGetCategoriesQuery = () =>
   useQuery({
     queryKey: ["categories"],
     queryFn: async () =>
-      (await apiClient.get<[]>(`/api/products/categories`)).data,
+      (await apiClient.get<[]>(`http://localhost:8081/api/products/categories`))
+        .data,
   });

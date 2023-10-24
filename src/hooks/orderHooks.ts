@@ -40,7 +40,7 @@ export const useCreateOrderMutation = () =>
     }) =>
       (
         await apiClient.post<{ message: string; order: Order }>(
-          `api/orders`,
+          `http://localhost:8083/rentals`,
           order
         )
       ).data,

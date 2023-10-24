@@ -40,7 +40,9 @@ export default function PlaceOrderPage() {
       })
       dispatch({ type: 'CART_CLEAR' })
       localStorage.removeItem('cartItems')
-      navigate(`/order/${data.order._id}`)
+      toast.success('Order created successfully')
+      // navigate(`/order/${data.order._id}`)
+      navigate(`/`)
     } catch (err) {
       toast.error(getError(err as ApiError))
     }
