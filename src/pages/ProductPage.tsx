@@ -24,7 +24,7 @@ import { ApiError } from "../types/ApiError";
 
 import { convertProductToCartItem, getError } from "../utils";
 import { generateMockProducts, generateMockReviews } from "../utils/Mock";
-import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
+import { useGetProductDetailsBySlugQuery, useGetProductReviewsQuery } from "../hooks/productHooks";
 
 import "./ProductPage.styles.css";
 
@@ -43,6 +43,12 @@ const ProductPage = () => {
     isLoading,
     error,
   } = useGetProductDetailsBySlugQuery(id!);
+
+  // const {
+  //   data: reviews,
+  //   isLoading: isLoadingReviews,
+  //   error: errorReviews,
+  // } = useGetProductReviewsQuery(id!);
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
