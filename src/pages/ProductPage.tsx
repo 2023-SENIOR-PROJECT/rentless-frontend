@@ -24,7 +24,8 @@ import { ApiError } from "../types/ApiError";
 
 import { convertProductToCartItem, getError } from "../utils";
 import { generateMockProducts, generateMockReviews } from "../utils/Mock";
-import { useGetProductDetailsBySlugQuery, useGetProductReviewsQuery } from "../hooks/productHooks";
+import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
+import { useGetProductReviewsQuery } from "../hooks/reviewHooks";
 
 import "./ProductPage.styles.css";
 
@@ -38,12 +39,18 @@ const ProductPage = () => {
   const reviews = generateMockReviews(5);
   const [index, setIndex] = useState(0);
 
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useGetProductDetailsBySlugQuery(id!);
+  // Commment because Gatewat not completely finish yet
+  // const {
+  //   data: product,
+  //   isLoading,
+  //   error,
+  // } = useGetProductDetailsBySlugQuery(id!);
 
+  const isLoading = false;
+  const error = false;
+  const product = generateMockProducts()[0];
+
+  // Commment because Gatewat not completely finish yet
   // const {
   //   data: reviews,
   //   isLoading: isLoadingReviews,
@@ -80,7 +87,13 @@ const ProductPage = () => {
     <Container>
       <Row>
         <Col lg={6}>
-          <Image className="h-100" src={product.image} alt={product.name} thumbnail fluid />
+          <Image
+            className="h-100"
+            src={product.image}
+            alt={product.name}
+            thumbnail
+            fluid
+          />
         </Col>
         <Col
           lg={6}
