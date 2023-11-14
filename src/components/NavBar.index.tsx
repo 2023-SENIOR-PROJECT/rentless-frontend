@@ -8,6 +8,8 @@ import SearchBox from "./SearchBox";
 import { Store } from "../Store";
 import "./NavBar.styles.css";
 
+import lightLogo from "../assets/rentless-logo-white.svg";
+
 interface NavBarProps {
   sidebarIsOpen: boolean;
   setSidebarIsOpen: (value: boolean) => void;
@@ -18,6 +20,9 @@ const NavBar: React.FC<NavBarProps> = ({ setSidebarIsOpen, sidebarIsOpen }) => {
     state: { mode, cart, userInfo },
     dispatch,
   } = useContext(Store);
+
+  const logoImg = lightLogo;
+
   const switchModeHandler = () => {
     dispatch({ type: "SWITCH_MODE" });
   };
@@ -40,6 +45,9 @@ const NavBar: React.FC<NavBarProps> = ({ setSidebarIsOpen, sidebarIsOpen }) => {
       >
         <Container fluid>
           <LinkContainer to="/" className="">
+            <img src={logoImg} alt="Rentless" className="logo mx-2 my-2" />
+          </LinkContainer>
+          <LinkContainer to="/" className="mb-2">
             <Navbar.Brand>Rentless</Navbar.Brand>
           </LinkContainer>
           <SearchBox />
@@ -80,17 +88,15 @@ const NavBar: React.FC<NavBarProps> = ({ setSidebarIsOpen, sidebarIsOpen }) => {
                   </Link>
                 </NavDropdown>
               ) : (
-                <div className="header-link mb-1">
-                  <NavDropdown
-                    className="px-3"
-                    title={`Hello, sign in`}
-                    id="nav-dropdown"
-                  >
-                    <LinkContainer to="/signin">
-                      <NavDropdown.Item>Sign In</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
-                </div>
+                <NavDropdown
+                  className="header-link"
+                  title={`Hello, sign in`}
+                  id="nav-dropdown"
+                >
+                  <LinkContainer to="/signin">
+                    <NavDropdown.Item>Sign In</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
               )}
               <Link
                 to="/orderhistory"

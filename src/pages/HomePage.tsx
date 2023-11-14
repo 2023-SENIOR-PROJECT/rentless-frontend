@@ -23,7 +23,7 @@ export default function HomePage() {
   ) : (
     <Row>
       <Helmet>
-        <title>TS Rentless</title>
+        <title>Rentless Connxt</title>
       </Helmet>
       {products!.map((product) => (
         <Col key={product.id} sm={6} md={4} lg={3}>

@@ -28,6 +28,7 @@ import { useGetProductDetailsBySlugQuery } from "../hooks/productHooks";
 import { useGetProductReviewsQuery } from "../hooks/reviewHooks";
 
 import "./ProductPage.styles.css";
+import AddReviewButton from "../components/AddReviewButton";
 
 const ProductPage = () => {
   const params = useParams();
@@ -158,8 +159,8 @@ const ProductPage = () => {
           </Row>
         </Col>
       </Row>
-      {reviews && (
-        <Container className="d-flex justify-content-center my-5">
+      <Container className="d-flex justify-content-center my-5">
+        {reviews ? (
           <Carousel
             activeIndex={index}
             onSelect={handleSelect}
@@ -171,8 +172,10 @@ const ProductPage = () => {
               </Carousel.Item>
             ))}
           </Carousel>
-        </Container>
-      )}
+        ) : (
+          <AddReviewButton />
+        )}
+      </Container>
     </Container>
   );
 };

@@ -6,16 +6,18 @@ import { Button, Form, Modal } from "react-bootstrap";
 import ReactStars from "react-rating-star-with-type";
 import { useCreateReviewMutation } from "../hooks/reviewHooks";
 import { useParams } from "react-router-dom";
+import AddReviewButton from "./AddReviewButton";
 
 interface ReviewProps {
   data: ReviewDTO;
 }
 
 const Review: React.FC<ReviewProps> = ({ data }) => {
-  const { title, rating, comment, createdAt, name } = data;
+  const { title, rate: rating, comment, created_at, name } = data;
   const params = useParams();
 
   const { id } = params;
+  const createdAt = new Date(created_at);
 
   const [show, setShow] = useState(false);
   const [star, setStar] = useState(0);
@@ -58,59 +60,8 @@ const Review: React.FC<ReviewProps> = ({ data }) => {
           </Card.Subtitle>
           <Card.Text>{comment}</Card.Text>
         </Card.Body>
-        <Button onClick={handleShow} variant="secondary">
-          Add your review
-        </Button>
+        <AddReviewButton />
       </Card>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add your review</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Woohoo, you are writing to this product !<hr></hr>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>
-                <strong>Rating</strong>
-              </Form.Label>
-              <ReactStars
-                onChange={onStarChange}
-                value={star}
-                isEdit={true}
-                activeColors={[
-                  "red",
-                  "orange",
-                  "#FFCE00",
-                  "#9177FF",
-                  "#8568FC",
-                ]}
-              />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="commentForm.ControlTextarea1"
-            >
-              <Form.Label>
-                <strong>Comment</strong>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={commentText}
-                onChange={handleCommentChange}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };
