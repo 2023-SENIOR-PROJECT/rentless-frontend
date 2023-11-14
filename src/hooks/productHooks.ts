@@ -20,12 +20,6 @@ export const useGetProductDetailsBySlugQuery = (id: string) =>
       (await apiClient.get<Product>(`/api/products/${id}`)).data,
   });
 
-export const useGetProductReviewsQuery = (id: string) =>
-  useQuery({
-    queryKey: ["reviews", id],
-    queryFn: async () => (await apiClient.get<Product>(`/reviews/${id}`)).data,
-  });
-
 export const useGetCategoriesQuery = () =>
   useQuery({
     queryKey: ["categories"],
