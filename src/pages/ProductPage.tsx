@@ -36,26 +36,26 @@ const ProductPage = () => {
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
-  const reviews = generateMockReviews(5);
   const [index, setIndex] = useState(0);
 
-  // Commment because Gatewat not completely finish yet
-  // const {
-  //   data: product,
-  //   isLoading,
-  //   error,
-  // } = useGetProductDetailsBySlugQuery(id!);
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useGetProductDetailsBySlugQuery(id!);
 
-  const isLoading = false;
-  const error = false;
-  const product = generateMockProducts()[0];
+  // Commment because Gatewat may be completely finish yet
+  // const isLoading = false;
+  // const error = false;
+  // const product = generateMockProducts()[0];
 
-  // Commment because Gatewat not completely finish yet
-  // const {
-  //   data: reviews,
-  //   isLoading: isLoadingReviews,
-  //   error: errorReviews,
-  // } = useGetProductReviewsQuery(id!);
+  const {
+    data: reviews,
+    isLoading: isLoadingReviews,
+    error: errorReviews,
+  } = useGetProductReviewsQuery(id!);
+  // Commment because Gatewat may be completely finish yet
+  // const reviews = generateMockReviews(5);
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
@@ -158,15 +158,21 @@ const ProductPage = () => {
           </Row>
         </Col>
       </Row>
-      <Container className="d-flex justify-content-center my-5">
-        <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
-          {reviews.map((review) => (
-            <Carousel.Item key={review.id}>
-              <Review data={review} />
-            </Carousel.Item>
-          ))}
-        </Carousel>
-      </Container>
+      {reviews && (
+        <Container className="d-flex justify-content-center my-5">
+          <Carousel
+            activeIndex={index}
+            onSelect={handleSelect}
+            controls={false}
+          >
+            {reviews.map((review) => (
+              <Carousel.Item key={review.id}>
+                <Review data={review} />
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </Container>
+      )}
     </Container>
   );
 };

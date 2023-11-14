@@ -9,12 +9,12 @@ import { getError } from "../utils";
 import { generateMockProducts } from "../utils/Mock";
 
 export default function HomePage() {
-  // Commment because Gatewat not completely finish yet
-  // var { data: products, isLoading, error } = useGetProductsQuery();
+  var { data: products, isLoading, error } = useGetProductsQuery();
 
-  const isLoading = false;
-  const error = false;
-  const products = generateMockProducts(5);
+  //Commment because Gatewat may be completely finish yet
+  // const isLoading = false;
+  // const error = false;
+  //const products = generateMockProducts(5);
 
   return isLoading ? (
     <LoadingBox />
