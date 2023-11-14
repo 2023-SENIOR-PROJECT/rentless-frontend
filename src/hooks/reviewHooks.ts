@@ -7,7 +7,7 @@ export const useGetProductReviewsQuery = (productId: string) =>
   useQuery({
     queryKey: ["reviews", productId],
     queryFn: async () =>
-      (await apiClient.get<Product>(`/reviews/${productId}`)).data,
+      (await apiClient.get<Product>(`/review-service/reviews/${productId}`)).data,
   });
 
 export const useCreateReviewMutation = (productId: string) =>
@@ -15,7 +15,7 @@ export const useCreateReviewMutation = (productId: string) =>
     mutationFn: async (review: { rate: number; comment: string }) =>
       (
         await apiClient.post<{ message: string; order: ReviewDTO }>(
-          `/rentals/${productId}`,
+          `/review-service/reviews/${productId}`,
           review
         )
       ).data,

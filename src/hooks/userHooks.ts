@@ -7,7 +7,7 @@ export const useSigninMutation = () =>
   useMutation({
     mutationFn: async ({ email, pwd }: { email: string; pwd: string }) =>
       (
-        await apiClient.post<TResponse<UserInfo>>(`/auth/login`, {
+        await apiClient.post<TResponse<UserInfo>>(`/user-service/auth/login`, {
           email,
           pwd,
         })
@@ -30,7 +30,7 @@ export const useSignupMutation = () =>
       password2: string;
     }) =>
       (
-        await apiClient.post<TResponse<UserInfo>>(`/auth/register`, {
+        await apiClient.post<TResponse<UserInfo>>(`/user-service/auth/register`, {
           firstname,
           lastname,
           email,

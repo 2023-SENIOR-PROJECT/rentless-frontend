@@ -7,7 +7,7 @@ export const useGetProductsQuery = () =>
     queryKey: ["products"],
     queryFn: async () => {
       const { data } = await apiClient.get<{ products: Product[] }>(
-        `/api/products`
+        `/product-service/api/products`
       );
       return data;
     },
@@ -17,12 +17,14 @@ export const useGetProductDetailsBySlugQuery = (id: string) =>
   useQuery({
     queryKey: ["products", id],
     queryFn: async () =>
-      (await apiClient.get<Product>(`/api/products/${id}`)).data,
+      (await apiClient.get<Product>(`/product-service/api/products/${id}`))
+        .data,
   });
 
 export const useGetCategoriesQuery = () =>
   useQuery({
     queryKey: ["categories"],
     queryFn: async () =>
-      (await apiClient.get<[]>(`/api/products/categories`)).data,
+      (await apiClient.get<[]>(`/product-service/api/products/categories`))
+        .data,
   });
